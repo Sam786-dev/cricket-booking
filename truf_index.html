@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Cricket Turf Booking</title>
+
+  <!-- FLATPICKR CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+  <style>
+
+    body{
+      font-family:Arial;
+      background:#f4f7fb;
+      padding:30px;
+    }
+
+    .box{
+      max-width:500px;
+      margin:auto;
+      background:white;
+      padding:25px;
+      border-radius:15px;
+      box-shadow:0 0 15px rgba(0,0,0,0.1);
+    }
+
+    h1{
+      text-align:center;
+      color:green;
+      margin-bottom:20px;
+    }
+
+    input,
+    select,
+    button{
+      width:100%;
+      padding:14px;
+      margin-top:12px;
+      border-radius:8px;
+      border:1px solid #ccc;
+      font-size:16px;
+    }
+
+    button{
+      background:green;
+      color:white;
+      border:none;
+      cursor:pointer;
+      font-size:18px;
+    }
+
+    button:hover{
+      background:darkgreen;
+    }
+
+    .summary{
+      margin-top:20px;
+      background:#eef9ee;
+      padding:15px;
+      border-radius:10px;
+      display:none;
+    }
+
+    .summary h3{
+      color:green;
+      margin-bottom:10px;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="box">
+
+    <h1>🏏 Turf Booking</h1>
+
+    <input type="text" id="name" placeholder="Enter Full Name">
+
+    <input type="tel" id="phone" placeholder="Enter Phone Number">
+
+    <select id="turf">
+      <option>Green Field Turf</option>
+      <option>Champion Turf</option>
+      <option>Royal Cricket Arena</option>
+    </select>
+
+    <input type="date" id="date">
+
+    <!-- CLOCK PICKERS -->
+    <input type="text" id="startTime" placeholder="Select Start Time">
+    <input type="text" id="endTime" placeholder="Select End Time">
+
+    <button onclick="bookNow()">Book Now</button>
+
+    <div class="summary" id="summary">
+
+      <h3>Booking Summary</h3>
+
+      <p><strong>Name:</strong> <span id="sName"></span></p>
+      <p><strong>Phone:</strong> <span id="sPhone"></span></p>
+      <p><strong>Turf:</strong> <span id="sTurf"></span></p>
+      <p><strong>Date:</strong> <span id="sDate"></span></p>
+      <p><strong>Time:</strong> <span id="sTime"></span></p>
+
+    </div>
+
+  </div>
+
+  <!-- FLATPICKR JS -->
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+  <script>
+
+    // CLOCK PICKER INIT
+    flatpickr("#startTime", {
+      enableTime: true,
+      noCalendar: true,
+      dateFormat: "H:i",
+      time_24hr: true
+    });
+
+    flatpickr("#endTime", {
+      enableTime: true,
+      noCalendar: true,
+      dateFormat: "H:i",
+      time_24hr: true
+    });
+
+    // SET MIN DATE = TODAY
+    const today =
+    new Date().toISOString().split("T")[0];
+
+    document.getElementById("date").min =
+    today;
+
+
+
+    function bookNow(){
+
+      const name =
+      document.getElementById("name").value.trim();
+
+      const phone =
+      document.getElementById("phone").value.trim();
+
+      const turf =
+      document.getElementById("turf").value;
+
+      const date =
+      document.getElementById("date").value;
+
+      const startTime =
+      document.getElementById("startTime").value;
+
+      const endTime =
+      document.getElementById("endTime").value;
+
+
+
+      if(!name || !phone || !date || !startTime || !endTime){
+        alert("Please fill all fields");
+        return;
+      }
+
+
+
+      // PHONE VALIDATION
+      const phonePattern =
+      /^(\+91)?[6-9]\d{9}$/;
+
+      if(!phonePattern.test(phone)){
+        alert("Enter valid Indian phone number");
+        return;
+      }
+
+
+
+      // TIME VALIDATION
+      const start =
+      new Date(`2026-01-01T${startTime}`);
+
+      const end =
+      new Date(`2026-01-01T${endTime}`);
+
+      if(end <= start){
+        alert("End time must be greater than start time");
+        return;
+      }
+
+
+
+      // SHOW SUMMARY
+      document.getElementById("summary").style.display = "block";
+
+      document.getElementById("sName").innerText = name;
+      document.getElementById("sPhone").innerText = phone;
+      document.getElementById("sTurf").innerText = turf;
+      document.getElementById("sDate").innerText = date;
+      document.getElementById("sTime").innerText = startTime + " to " + endTime;
+
+
+
+      // WHATSAPP NUMBER
+      const whatsappNumber =
+      "919110427011";
+
+
+
+      const message =
+`🏏 Cricket Turf Booking
+
+Name: ${name}
+Phone: ${phone}
+Turf: ${turf}
+Date: ${date}
+Time: ${startTime} to ${endTime}`;
+
+
+
+      const whatsappURL =
+`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+
+
+
+      window.location.href =
+      whatsappURL;
+
+    }
+
+  </script>
+
+</body>
+
+</html>
