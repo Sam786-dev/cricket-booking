@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Cricket Turf Booking</title>
+
+  <!-- FLATPICKR -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+  <style>
+
+    body{
+      font-family:Arial;
+      background:#f4f7fb;
+      margin:0;
+    }
+
+    /* HERO IMAGE SECTION */
+    .hero{
+      height:250px;
+      background:url("https://images.unsplash.com/photo-1521412644187-c49fa049e84d?auto=format&fit=crop&w=1400&q=80")
+      center/cover no-repeat;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:white;
+      font-size:28px;
+      font-weight:bold;
+      text-shadow:2px 2px 8px rgba(0,0,0,0.7);
+    }
+
+    .box{
+      max-width:500px;
+      margin:-40px auto 40px auto;
+      background:white;
+      padding:25px;
+      border-radius:15px;
+      box-shadow:0 0 15px rgba(0,0,0,0.1);
+    }
+
+    h1{
+      text-align:center;
+      color:green;
+      margin-bottom:20px;
+    }
+
+    label{
+      display:block;
+      margin-top:12px;
+      font-weight:bold;
+    }
+
+    input,
+    button{
+      width:100%;
+      padding:14px;
+      margin-top:6px;
+      border-radius:8px;
+      border:1px solid #ccc;
+      font-size:16px;
+    }
+
+    button{
+      background:green;
+      color:white;
+      border:none;
+      cursor:pointer;
+      font-size:18px;
+      margin-top:15px;
+    }
+
+    button:hover{
+      background:darkgreen;
+    }
+
+    .summary{
+      margin-top:20px;
+      background:#eef9ee;
+      padding:15px;
+      border-radius:10px;
+      display:none;
+    }
+
+    .summary h3{
+      color:green;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <!-- CRICKET GROUND IMAGE -->
+  <div class="hero">
+    Cricket Turf Booking 🏏
+  </div>
+
+  <div class="box">
+
+    <h1>Book Your Turf</h1>
+
+    <!-- NAME -->
+    <label>Full Name</label>
+    <input type="text" id="name" placeholder="Enter Full Name">
+
+    <!-- PHONE -->
+    <label>Phone Number</label>
+    <input type="tel" id="phone" placeholder="Enter Phone Number">
+
+    <!-- DATE -->
+    <label>Booking Date</label>
+    <input type="date" id="date">
+
+    <!-- START TIME -->
+    <label>Start Time</label>
+    <input type="text" id="startTime" placeholder="Select Start Time">
+
+    <!-- END TIME -->
+    <label>End Time</label>
+    <input type="text" id="endTime" placeholder="Select End Time">
+
+    <button onclick="bookNow()">Book Now</button>
+
+    <!-- SUMMARY -->
+    <div class="summary" id="summary">
+
+      <h3>Booking Summary</h3>
+
+      <p><strong>Name:</strong> <span id="sName"></span></p>
+      <p><strong>Phone:</strong> <span id="sPhone"></span></p>
+      <p><strong>Date:</strong> <span id="sDate"></span></p>
+      <p><strong>Time:</strong> <span id="sTime"></span></p>
+
+    </div>
+
+  </div>
+
+  <!-- FLATPICKR -->
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+  <script>
+
+    // CLOCK PICKER
+    flatpickr("#startTime", {
+      enableTime: true,
+      noCalendar: true,
+      dateFormat: "H:i",
+      time_24hr: true
+    });
+
+    flatpickr("#endTime", {
+      enableTime: true,
+      noCalendar: true,
+      dateFormat: "H:i",
+      time_24hr: true
+    });
+
+
+
+    // MIN DATE = TODAY
+    const today =
+    new Date().toISOString().split("T")[0];
+
+    document.getElementById("date").min =
+    today;
+
+
+
+    function bookNow(){
+
+      let name =
+      document.getElementById("name").value.trim();
+
+      let phone =
+      document.getElementById("phone").value.trim();
+
+      let date =
+      document.getElementById("date").value;
+
+      let startTime =
+      document.getElementById("startTime").value;
+
+      let endTime =
+      document.getElementById("endTime").value;
+
+
+
+      // CLEAN PHONE
+      phone = phone.replace(/\s+/g, "");
+
+
+
+      // EMPTY CHECK
+      if(!name || !phone || !date || !startTime || !endTime){
+        alert("⚠️ Please fill all fields");
+        return;
+      }
+
+
+
+      // PHONE VALIDATION
+      const phonePattern =
+      /^(\+91)?[6-9]\d{9}$/;
+
+      if(!phonePattern.test(phone)){
+        alert("⚠️ Enter valid 10-digit mobile number");
+        return;
+      }
+
+
+
+      // TIME VALIDATION
+      const start =
+      new Date(`2026-01-01T${startTime}`);
+
+      const end =
+      new Date(`2026-01-01T${endTime}`);
+
+      if(end <= start){
+        alert("⚠️ End time must be greater than start time");
+        return;
+      }
+
+
+
+      // SHOW SUMMARY
+      document.getElementById("summary").style.display = "block";
+
+      document.getElementById("sName").innerText = name;
+      document.getElementById("sPhone").innerText = phone;
+      document.getElementById("sDate").innerText = date;
+      document.getElementById("sTime").innerText = startTime + " to " + endTime;
+
+
+
+      // WHATSAPP
+      const whatsappNumber =
+      "919110427011";
+
+
+
+      const message =
+`🏏 Cricket Turf Booking
+
+Name: ${name}
+Phone: ${phone}
+Date: ${date}
+Time: ${startTime} to ${endTime}`;
+
+
+
+      const whatsappURL =
+`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+
+
+
+      window.location.href =
+      whatsappURL;
+
+    }
+
+  </script>
+
+</body>
+
+</html>
