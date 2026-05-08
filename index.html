@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Cricket Turf Booking</title>
+
+  <style>
+
+    body{
+      font-family:Arial;
+      background:#f4f7fb;
+      padding:30px;
+    }
+
+    .box{
+      max-width:500px;
+      margin:auto;
+      background:white;
+      padding:25px;
+      border-radius:10px;
+      box-shadow:0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h1{
+      text-align:center;
+      color:green;
+    }
+
+    input,
+    select,
+    button{
+      width:100%;
+      padding:12px;
+      margin-top:10px;
+      border-radius:8px;
+      border:1px solid #ccc;
+      font-size:16px;
+    }
+
+    button{
+      background:green;
+      color:white;
+      border:none;
+      cursor:pointer;
+    }
+
+    button:hover{
+      background:darkgreen;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="box">
+
+    <h1>🏏 Turf Booking</h1>
+
+    <input
+      type="text"
+      id="name"
+      placeholder="Enter Name"
+    >
+
+    <input
+      type="tel"
+      id="phone"
+      placeholder="Enter Phone Number"
+    >
+
+    <select id="turf">
+
+      <option>Green Field Turf</option>
+
+      <option>Champion Turf</option>
+
+    </select>
+
+    <input
+      type="date"
+      id="date"
+    >
+
+    <input
+      type="time"
+      id="startTime"
+    >
+
+    <input
+      type="time"
+      id="endTime"
+    >
+
+    <button onclick="bookNow()">
+      Book Now
+    </button>
+
+  </div>
+
+
+
+  <script>
+
+    function bookNow(){
+
+      const name =
+      document.getElementById("name").value;
+
+      const phone =
+      document.getElementById("phone").value;
+
+      const turf =
+      document.getElementById("turf").value;
+
+      const date =
+      document.getElementById("date").value;
+
+      const startTime =
+      document.getElementById("startTime").value;
+
+      const endTime =
+      document.getElementById("endTime").value;
+
+
+
+      // YOUR WHATSAPP NUMBER
+
+      const whatsappNumber =
+      "919110427011";
+
+
+
+      const message =
+`🏏 Cricket Turf Booking
+
+Name: ${name}
+
+Phone: ${phone}
+
+Turf: ${turf}
+
+Date: ${date}
+
+Time: ${startTime} to ${endTime}`;
+
+
+
+      const whatsappURL =
+`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+
+
+
+      window.open(
+        whatsappURL,
+        "_blank"
+      );
+
+    }
+
+  </script>
+
+</body>
+
+</html>
